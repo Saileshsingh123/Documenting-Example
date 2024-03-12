@@ -1,0 +1,476 @@
+UPDATE STUDENT SET district='JHAPA' WHERE ID= 3;
+UPDATE student SET NAME='Deeya Desar' , ADDRESS='Kritipur', GENDER='F',DOB='2000/12/31', MARKS= 98 WHERE id=2
+INSERT INTO student(ID,NAME,ADDRESS,GENDER,DOB,MARKS)
+VALUES(2,'Sailesh singh','BALKUMARI','M','2000/12/14',99);
+
+
+PRIMARY KEY 
+CREATE TABLE PHONE (
+    ID INT PRIMARY KEY AUTO_INCREMENT,
+    person_id int NOT NULL,
+    PHONE VARCHAR(12) NOT NULL,
+    is_added datetime DEFAULT NOW(),
+    FOREIGN KEY(person_id) REFERENCES person (id)
+    );
+    
+
+SQL JOIN 
+1. INNER JOIN
+SYNTAX:
+SELECT TABLENAME.COLNAME(S), FROM TABLE1 JOIN TABLE2 ON TABLE1.MATCHINGCOL = TABLE2.MATCHINGCOL;
+EG : SELECT person.name, phone.PHONE FROM person JOIN phone ON person.id = phone.person_id AND PERSON.NAME='SAILESH';
+
+INTERVIEW : 2 TABLE MA 1 JOIN 
+	    3 OTA TABLE MA 2 OTRA JOIN USE HUNXA 
+
+2.LEFT JOIN 
+EG. SELECT person.name, phone.PHONE FROM person LEFT JOIN phone ON person.id = phone.person_id;
+
+3.RIGHT JOIN
+EG. SELECT person.name, phone.PHONE FROM person RIGHT JOIN phone ON person.id = phone.person_id;
+
+
+
+FACEBOOK DATABASE
+
+CREATE TABLE USERS(
+    ID INT PRIMARY KEY AUTO_INCREMENT,
+    NAME VARCHAR(100) NOT NULL,
+    PASSWORD VARCHAR(256) NOT NULL,
+    EMAIL VARCHAR(300),
+    PHONE VARCHAR(13)
+    );
+    
+    
+CREATE TABLE POST(
+    ID INT PRIMARY KEY AUTO_INCREMENT,
+    TITLE VARCHAR(100),
+    BODY TEXT,
+    DATES DATE,
+    USER_ID INT NOT NULL,
+    FOREIGN KEY(USER_ID) REFERENCES USERS(ID)
+);
+
+
+CREATE TABLE COMMENTS(
+    POST_ID INT NOT NULL,
+    USER_ID INT NOT NULL,
+    COMMENT VARCHAR(256),
+    DATES DATETIME,
+    FOREIGN KEY (POST_ID) REFERENCES post(ID),
+    FOREIGN KEY(USER_ID) REFERENCES users(ID)
+    );
+    
+
+SELECT users.ID ,users.NAME ,post.TITLE ,post.BODY FROM users JOIN post ON users.ID = post.ID
+
+SELECT users.ID ,users.NAME ,post.TITLE ,post.BODY FROM users JOIN post ON users.ID = post.ID AND user.NAME = 'BIMAL'
+
+SELECT comments.COMMENT FROM comments JOIN post ON comments.POST_ID = post.ID
+
+
+
+STORE PROCEDURE 
+
+DELIMITER //
+CREATE PROCEDURE PROCEDURENAME()
+BEGIN
+
+SELECT * FROM USER
+
+END //
+DELIMITER //
+
+
+DELIMITER //
+CREATE PROCEDURE SHOWUSERBYPHONE(IN PHONE VARCHAR(100))
+BEGIN
+
+SELECT * FROM users WHERE users.PHONE = PHONE;
+
+END //
+DELIMITE R //
+
+
+q.1 
+create table tble(
+s_no int,
+col1 varchar(1),
+col2 varchar(1),
+col3 varchar(1),
+col4 varchar(1),
+col5 varchar(1)
+);
+
+insert into tble( s_no, col1, col2, col3, col4, col5)
+values
+(1,'A','B','C','D','E'),
+(2,' ','A','B','C','D'),
+(3,'E',' ',' ',' ','A'),
+(4,' ','A','E',' ','D'),
+(5,'E','D','C','B',' ');
+
+SELECT * FROM tble where col1='A' union all
+select * from tble where col2='A' union all
+SELECT * FROM tble where col3='A' union all
+SELECT * FROM tble where col4='A' union all
+SELECT * FROM tble where col5='A' ;
+
+select * from tble where 'A' in (col1, col2, col3, col4, col5);
+
+
+Q.2
+create table EMPtable (
+empno int,
+ename varchar(50),
+job varchar(50),
+mgr int,
+hiredate VARCHAR(100),
+sal int,
+comm int,
+deptno int 
+);
+
+insert into EMPtable (empno, ename, job, mgr,  hiredate, sal, comm, deptno)
+values
+(7839,'KING','PRESIDENT',null,'17/NOV/81',5100,null,10),
+(7698,'	Black','MANAGER',7839,'01/MAY/81',2850,null,30),
+(7782,'CLARK','MANAGER',7839,'09/JUN/81',2550,null,10),
+(7566,'JONES','MANAGER',7839,'02/APR/81',2975,null,20),
+(7788,'SCOTT','ALALYST',7566,'19/APR/87',3000,null,20),
+(7902,'FORD','ANALYST',7566,'01/DEC/81',3000,null,20),
+(7369,'SMITH','CLERK',7902,'17/DEC/80',800,null,20),
+(7499,'ALLEN','SALESMAN',7698,'20/FEB/81',1600,'300',30),
+(7521,'WARD','SALESMAN',7698,'22/FEB/81',1250,'500',30),
+(7654,'MARTIN','SALESMAN',7698,'28/SEP/81',1250,'1400',30),
+(7844,'TUNNER','SALESMAN',7698,'08/SEP/81',1500,'0',30),
+(7876,'ADAMS','CLERK',7788,'23/MAY/87',1100,null,20),
+(7900,'JAMES','CLERK',7698,'03/DEC/81',950,null,30),
+(7934,'MILLER','CLERK',7782,'23/JAN/82',1400,null,10);
+
+
+
+
+Exercise 1 and 2 ;
+
+
+CREATE TABLE EMPLOYEES(
+EMP_ID INT PRIMARY KEY auto_increment,
+NAME VARCHAR(100) NOT NULL,
+DESIG VARCHAR(100) DEFAULT "PROBATION",
+DEPT VARCHAR(100)
+);
+
+INSERT INTO EMPLOYEES(EMP_ID, NAME, DESIG , DEPT)
+VALUES
+(101, 'RAJU','MANAGER','LOAN');
+
+INSERT INTO EMPLOYEES(NAME, DESIG, DEPT)
+VALUES
+('SHAM','CASHIER','CASH'),
+('PAUL','ASSOCIATE','LOAN'),
+('ALEX','ACCOUNTANT','ACOUNT'),
+('VICTOR','ASSOCIATE','DEPOSIT');
+
+SELECT * FROM  EMPLOYEES;
+
+SELECT * FROM EMPLOYEES WHERE DEPT='LOAN';
+SELECT EMP_ID, NAME FROM EMPLOYEES;
+SELECT * FROM EMPLOYEES WHERE EMP_ID=101;
+SELECT EMP_ID , NAME FROM EMPLOYEES WHERE EMP_ID=101;
+
+UPDATE EMPLOYEES SET DEPT='IT' WHERE EMP_ID=104; 
+SELECT * FROM EMPLOYEES;
+
+DELETE FROM EMPLOYEES WHERE EMP_ID=102;
+
+
+exercise 3 : STRING FUNCTION
+
+create database bank_db;
+use bank_db;
+
+create table employees(
+emp_id int primary key auto_increment,
+fname varchar(100) not null,
+lname varchar(100) not null,
+desig varchar(100),
+dept varchar(100)
+);
+
+insert into employees(emp_id,fname,lname,Desig,Dept)
+values(101,'Raju','Rastogi','manager','loan');
+
+insert into employees(fname,lname,Desig,Dept)
+values('SHAM','Mohan','CASHIER','CASH'),
+('Baburao','Apte','ASSOCIATE','LOAN'),
+('Paul','Philip','Accountant','Account'),
+('ALEX','Watt','Associate','deposit');
+
+select * from employees;
+
+select concat_ws(':',emp_id,fname,desig,dept) from employees;
+
+select concat_ws(':', emp_id, concat(fname, ' ' , lname), desig, dept) from employees;
+
+select concat_ws(':', fname, upper(desig), dept) from employees;
+
+select emp_id, fname from employees;
+
+select concat(dept,emp_id), fname from employees;
+
+select concat(left(dept,1),emp_id) , fname from employees;
+
+
+EXERCISE 4 : DISTINCT, ORDERBY, LIKE, LIMIT
+
+CREATE DATABASE BANK_DB;
+USE BANK_DB;
+
+create table employee(
+emp_id int primary key auto_increment,
+fname varchar(100) not null,
+lname varchar(100) not null,
+desig varchar(100),
+dept varchar(100),
+salary int
+);
+
+
+insert into employee(emp_id,fname,lname,Desig,Dept,salary)
+values(101,'Raju','Rastogi','manager','loan',37000);
+
+insert into employee(fname,lname,Desig,Dept,salary)
+values('SHAM','Mohan','CASHIER','CASH',32000),
+('Baburao','Apte','ASSOCIATE','LOAN',25000),
+('Paul','Philip','Accountant','Account',45000),
+('ALEX','Watt','Associate','deposit',35000),
+('Rick','Watt','Manager','Account',65000),
+('Leena','Jhonson','Lead','Cash',25000),
+('John','Paul','Manager','IT',75000),
+('Alex','Watt','Probation','Loan',40000);
+
+select * from employee;
+
+select distinct dept from employee;
+
+select * from employee order by salary desc;
+
+select * from employee Limit 3;
+
+select * from employee where fname like 'A%';
+
+select * from employee where lname like '____';
+
+
+
+Exercise 5 : COUNT/AVG/MIN/MAX/SUM/GROUPBY
+
+create database bank_db;
+use bank_db;
+
+create table employee(
+emp_id int primary key auto_increment,
+fname varchar(100) not null,
+lname varchar(100) not null,
+desig varchar(100),
+dept varchar(100),
+salary int
+);
+
+insert into employee(emp_id,fname,lname,Desig,Dept,salary)
+values(101,'Raju','Rastogi','manager','loan',37000);
+
+insert into employee(fname,lname,Desig,Dept,salary)
+values('SHAM','Mohan','CASHIER','CASH',32000),
+('Baburao','Apte','ASSOCIATE','LOAN',25000),
+('Paul','Philip','Accountant','Account',45000),
+('ALEX','Watt','Associate','deposit',35000),
+('Rick','Watt','Manager','Account',65000),
+('Leena','Jhonson','Lead','Cash',25000),
+('John','Paul','Manager','IT',75000),
+('Alex','Watt','Probation','Loan',40000);
+
+select * from employee;
+
+select count(emp_id) from employee;
+
+select dept, count(emp_id) from employee group by dept;
+
+select min(salary) from employee;
+
+select * from employee where salary=(select max(salary) from employee);
+
+select max(salary) from employee;
+
+select sum(salary) from employee where dept='loan';
+
+select dept, avg(salary) from employee group by dept;
+
+select avg(salary) from employee;
+
+EXERCISE 6 : DATA TYPE- NOW()/CURRENT_DATE()/CURRENT_TIME/DATEDIFF
+
+select current_time();
+select current_date();
+SELECT DAYNAME(NOW());
+select date_format(NOW(),'%d:%m:%Y');
+select date_format(now(), '%M %D at %T');
+select now();
+
+
+EX 7 : REALTIONAL OPERATOR/ LOGICAL OPERATOR/ IN AND NOT KEYWORD/ BETWEEN KEYWORD / CASE TO APPLY CONDITION
+
+create database bank_db;
+use bank_db;
+
+create table employee(
+emp_id int primary key auto_increment,
+fname varchar(100) not null,
+lname varchar(100) not null,
+desig varchar(100),
+dept varchar(100),
+salary int
+);
+
+insert into employee(emp_id,fname,lname,Desig,Dept,salary)
+values(101,'Raju','Rastogi','manager','loan',37000);
+
+insert into employee(fname,lname,Desig,Dept,salary)
+values('SHAM','Mohan','CASHIER','CASH',32000),
+('Baburao','Apte','ASSOCIATE','LOAN',25000),
+('Paul','Philip','Accountant','Account',45000),
+('ALEX','Watt','Associate','deposit',35000),
+('Rick','Watt','Manager','Account',65000),
+('Leena','Jhonson','Lead','Cash',25000),
+('John','Paul','Manager','IT',75000),
+('Alex','Watt','Probation','Loan',40000);
+
+select * from employee;
+
+select * from employee where salary between 30000 and 40000;
+
+select * from employee where fname like 'r%' or  fname like "s%";
+
+select dept, salary from employee where salary=25000 and dept='cash'; 
+
+select * from employee where salary=25000 and dept='cash';
+
+select * from employee where desig in ('manager','lead','associate');
+
+select fname, salary,
+case 
+when salary !=0 then salary/80
+end as 'salary in dollars'
+from employee;
+
+EX 8 : FOREIGN KEY / 
+
+create database books;
+use books;
+
+create table authors(
+author_id int primary key auto_increment,
+author_name varchar(256) not null
+);
+
+create table book(
+book_id int primary key auto_increment,
+title varchar(300) not null,
+rating int,
+au_id int,
+foreign key (au_id) references authors(author_id)
+);
+
+insert into authors(author_name)
+values('Raju'),('Sham'),('Baburao'),('Paul');
+
+insert into book(title,rating,au_id)
+values('Story of Raju',5,1),
+('Story of baburao',4,3),
+('Raju - The great man',2,1),
+('Love story by Sham',1,2);
+
+select * from authors;
+
+select * from book;
+
+select author_name , title , rating from authors 
+inner join book ON book.au_id=authors.author_id;
+
+select author_name,title,rating from authors 
+left join book ON book.au_id=authors.author_id;
+
+select author_name,title,rating from authors 
+right join book ON book.au_id=authors.author_id;
+
+SELECT author_name, ifnull(title,'Not found'), ifnull(rating, 0) from authors
+left join book ON book.au_id=authors.author_id;
+
+select author_name, rating,
+case 
+when rating >3 then 'good' else 'average'
+end as 'remark'
+from authors
+inner join book on book.au_id=authors.author_id;
+
+
+ex 9 
+
+
+create database school;
+use school;
+
+create table students(
+id int primary key auto_increment,
+student_name varchar(200)
+);
+
+create table courses(
+id int primary key auto_increment,
+course_name varchar(200),
+fees int
+);
+
+create table student_course(
+student_id int,
+course_id int,
+foreign key (student_id) references students(id),
+foreign key (course_id) references courses(id)
+);
+
+insert into students(student_name)
+values('Raju'),('Sham'),('Paul'),('alex');
+
+insert into courses(id,course_name,fees)
+values(101,'PD',3000);
+
+insert into courses(course_name,fees)
+values('Java',5000),('SQL','4000'),('Python',6000),('Linux',10000);
+
+select * from students;
+
+select * from courses;
+
+insert into student_course(student_id,course_id)
+values(1,101),(1,102),(2,105),(1,105),(3,103),(2,102),(4,104);
+
+select * from student_course;
+
+select student_name, course_name from students
+join student_course on student_course.student_id=students.id
+join courses on student_course.course_id=courses.id;
+
+select course_name, count(student_name) from students
+join student_course on student_course.student_id=students.id
+join courses on student_course.course_id=courses.id
+group by course_name;
+
+
+select student_name, sum(fees) from students
+join student_course on student_course.student_id=students.id
+join courses on student_course.course_id=courses.id
+group by student_name;
+
+    
+    
